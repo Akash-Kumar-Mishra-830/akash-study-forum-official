@@ -1,0 +1,19 @@
+services:
+  - type: web
+    name: akash-study-forum
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /
+    disk:
+      name: asf-study-data
+      mountPath: /var/data
+      sizeGB: 1
+    envVars:
+      - key: STUDY_DB_PATH
+        value: /var/data/asf_study.sqlite3
+      - key: CRM_ADMIN_PASSWORD
+        sync: false
+      - key: STUDY_ADMIN_PASSWORD
+        sync: false
